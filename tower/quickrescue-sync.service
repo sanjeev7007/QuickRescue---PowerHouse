@@ -1,0 +1,27 @@
+[Unit]
+Description=QuickRescue Communication Tower Firebase Cloud Sync Service
+After=network.target quickrescue-receiver.service
+Wants=quickrescue-receiver.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/quickrescue
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/opt/quickrescue
+Environment=FIREBASE_CREDENTIALS_PATH=/opt/quickrescue/tower/serviceAccountKey.json
+
+ExecStart=/usr/bin/python3 /opt/quickrescue/tower/services/cloud_sync.py
+
+# Restart policy: auto-start on boot, restart on crash
+Restart=always
+RestartSec=5s
+KillMode=process
+
+# Logging to systemd journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=quickrescue-sync
+
+[Install]
+WantedBy=multi-user.target

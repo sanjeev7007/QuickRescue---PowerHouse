@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>QuickRescue — Tower Kiosk Interface</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="kiosk-body">
+
+  <!-- TOP HEADER BAR -->
+  <header class="kiosk-header">
+    <div class="header-left">
+      <div class="logo-mark">QR</div>
+      <div class="station-identity">
+        <h1 class="station-title">QuickRescue Tower Gateway</h1>
+        <span class="station-sub" id="towerMeta">TOWER-01 | SECTOR 4</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <span class="status-badge badge-online" id="netStatusBadge">
+        <span class="dot-indicator"></span>
+        <span id="netStatusText">ONLINE</span>
+      </span>
+      <span class="status-badge badge-power" id="powerStatusBadge">
+        <span class="power-icon">⚡</span>
+        <span id="powerText">13.2V | 20W SOLAR</span>
+      </span>
+    </div>
+
+    <div class="header-right">
+      <button class="btn-silence" id="btnSilence" title="Silence Siren and Acknowledge">
+        🔇 SILENCE ALARM
+      </button>
+      <div class="clock-display" id="clockDisplay">12:00:00</div>
+    </div>
+  </header>
+
+  <!-- MAIN KIOSK CONTENT (SPLIT COLUMNS) -->
+  <main class="kiosk-main">
+
+    <!-- LEFT COLUMN: PRIORITY INCIDENT QUEUE -->
+    <section class="pane-column pane-left">
+      <div class="section-title-bar">
+        <div class="section-heading">
+          <span class="icon">🚨</span>
+          <h2>ACTIVE INCIDENT QUEUE</h2>
+        </div>
+        <div class="priority-note">SOS &gt; HELP &gt; SAFE</div>
+      </div>
+
+      <div class="alert-feed-container" id="alertFeedContainer">
+        <div class="loading-state">Loading active incidents...</div>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: TELEMETRY, SQUAD & VOICE ASSISTANT -->
+    <section class="pane-column pane-right">
+
+      <!-- Environmental & Power Telemetry -->
+      <div class="kiosk-card telemetry-card">
+        <div class="card-header">
+          <span class="icon">📊</span>
+          <h3>STATION TELEMETRY & SOLAR POWER</h3>
+          <span class="counter-badge" id="solarBadge">SOLAR ACTIVE</span>
+        </div>
+        <div class="telemetry-grid">
+          <div class="telemetry-item">
+            <span class="label">BATTERY / SOC</span>
+            <span class="value" id="valBatt">13.2V (75%)</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">SOLAR STATE</span>
+            <span class="value" id="valSolar">☀️ CHG (+0.8A)</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">WATER LEVEL</span>
+            <span class="value" id="valWater">450 mm</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">TEMPERATURE</span>
+            <span class="value" id="valTemp">28.5 °C</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Field Squad & Device Monitor -->
+      <div class="kiosk-card squad-card">
+        <div class="card-header">
+          <span class="icon">📡</span>
+          <h3>SQUAD & FIELD DEVICES</h3>
+          <span class="counter-badge" id="squadCounter">0 ONLINE</span>
+        </div>
+        <div class="device-scroll-list" id="deviceListContainer">
+          <div class="loading-state">Scanning mesh network...</div>
+        </div>
+      </div>
+
+      <!-- Offline Voice Assistant Panel -->
+      <div class="kiosk-card voice-card">
+        <div class="card-header">
+          <span class="icon">🎙️</span>
+          <h3>OFFLINE VOICE ASSISTANT</h3>
+        </div>
+
+        <div class="voice-controls">
+          <button class="btn-mic" id="btnMic">
+            <span class="mic-wave"></span>
+            <span class="mic-label">ASK ASSISTANT (MIC)</span>
+          </button>
+          
+          <div class="quick-chips">
+            <button class="chip" data-query="current alerts">Active Alerts</button>
+            <button class="chip" data-query="weather and flood level">Weather / Flood</button>
+            <button class="chip" data-query="battery and power status">Power Status</button>
+            <button class="chip" data-query="active squad devices">Squad Nodes</button>
+          </div>
+        </div>
+
+        <div class="voice-response-bubble" id="voiceResponseBubble">
+          <span class="assistant-prefix">SPEAKER:</span>
+          <span class="assistant-text" id="voiceResponseText">Tap microphone or chip to ask station questions offline.</span>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

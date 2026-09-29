@@ -1,0 +1,30 @@
+[Unit]
+Description=QuickRescue Communication Tower Solar & Battery Power Monitor Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/quickrescue
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/opt/quickrescue
+
+ExecStart=/usr/bin/python3 /opt/quickrescue/tower/services/power_monitor.py
+
+# Restart policy: auto-start on boot, restart instantly on crash
+Restart=always
+RestartSec=3s
+KillMode=process
+
+# Logging to systemd journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=quickrescue-power
+
+# Resource limits & security hardening
+LimitNOFILE=65536
+TimeoutStopSec=10s
+
+[Install]
+WantedBy=multi-user.target

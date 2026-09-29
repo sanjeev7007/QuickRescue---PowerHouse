@@ -1,0 +1,548 @@
+/* QuickRescue Communication Tower — Touchscreen Kiosk Stylesheet */
+/* Target Resolution: 800x480 (Official Raspberry Pi 7" DSI Touchscreen) */
+
+:root {
+  --bg-main: #0b0f19;
+  --bg-card: #131b2e;
+  --bg-card-hover: #1e293b;
+  --border-subtle: #24324d;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  --color-sos: #ef4444;
+  --color-sos-glow: rgba(239, 68, 68, 0.4);
+  --color-help: #f59e0b;
+  --color-help-glow: rgba(245, 158, 11, 0.3);
+  --color-safe: #10b981;
+  --color-cyan: #38bdf8;
+  --color-purple: #818cf8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.kiosk-body {
+  width: 800px;
+  height: 480px;
+  max-width: 800px;
+  max-height: 480px;
+  overflow: hidden;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   HEADER BAR (48px Height)
+   ========================================================================== */
+.kiosk-header {
+  height: 48px;
+  min-height: 48px;
+  background: #0f172a;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  background: var(--color-cyan);
+  color: #0b0f19;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.station-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.station-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.badge-online {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.badge-offline {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.dot-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.badge-power {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-silence {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.1s, background 0.2s;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+}
+
+.btn-silence:active {
+  transform: scale(0.96);
+  background: #b91c1c;
+}
+
+.clock-display {
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #cbd5e1;
+  background: #1e293b;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   MAIN KIOSK LAYOUT (432px Available Height)
+   ========================================================================== */
+.kiosk-main {
+  height: 432px;
+  display: flex;
+  padding: 8px;
+  gap: 8px;
+}
+
+.pane-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pane-left {
+  flex: 55;
+  min-width: 0;
+}
+
+.pane-right {
+  flex: 45;
+  min-width: 0;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   LEFT PANE: ACTIVE INCIDENT QUEUE
+   ========================================================================== */
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 6px 4px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-heading h2 {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #f1f5f9;
+}
+
+.priority-note {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  background: #1e293b;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.alert-feed-container {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+/* Alert Item Card */
+.incident-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.incident-sos {
+  border-color: var(--color-sos);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, #131b2e 100%);
+  animation: pulse-sos 2s infinite;
+}
+
+@keyframes pulse-sos {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.incident-help {
+  border-color: var(--color-help);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, #131b2e 100%);
+}
+
+.incident-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.incident-tag-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.type-pill {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.pill-sos { background: var(--color-sos); color: #fff; }
+.pill-help { background: var(--color-help); color: #000; }
+.pill-safe { background: var(--color-safe); color: #fff; }
+
+.device-badge {
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  font-family: monospace;
+}
+
+.incident-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.incident-details-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+.coord-link {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.metric-chip {
+  background: #1e293b;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+/* Action Button Row */
+.incident-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.btn-action {
+  flex: 1;
+  height: 32px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn-action:active { transform: scale(0.97); }
+
+.btn-ack { background: #3b82f6; color: #fff; }
+.btn-progress { background: #d97706; color: #fff; }
+.btn-resolve { background: #059669; color: #fff; }
+
+/* Status pill indicator */
+.status-indicator {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.status-new { background: #b91c1c; color: #fff; }
+.status-progress { background: #b45309; color: #fff; }
+.status-resolved { background: #047857; color: #fff; }
+
+/* ==========================================================================
+   RIGHT PANE: TELEMETRY, SQUAD, VOICE
+   ========================================================================== */
+.kiosk-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.card-header h3 {
+  font-size: 11px;
+  font-weight: 800;
+  color: #e2e8f0;
+  letter-spacing: 0.5px;
+  margin-left: 4px;
+  flex: 1;
+}
+
+.counter-badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+/* Telemetry Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.telemetry-item {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.telemetry-item .label {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.telemetry-item .value {
+  font-size: 14px;
+  font-weight: 800;
+  color: #38bdf8;
+  font-family: monospace;
+}
+
+/* Squad Devices Scroll List */
+.device-scroll-list {
+  max-height: 90px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.device-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0f172a;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  border-left: 3px solid #3b82f6;
+}
+
+.device-row.device-sos {
+  border-left-color: var(--color-sos);
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.dev-id-text {
+  font-weight: 800;
+  font-family: monospace;
+}
+
+.dev-meta-text {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Voice Assistant Panel */
+.voice-card {
+  flex: 1;
+}
+
+.voice-controls {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.btn-mic {
+  width: 140px;
+  height: 48px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+}
+
+.btn-mic:active, .btn-mic.listening {
+  background: #dc2626;
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.8);
+}
+
+.quick-chips {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.chip {
+  background: #1e293b;
+  border: 1px solid var(--border-subtle);
+  color: #cbd5e1;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+  text-align: center;
+}
+
+.chip:active {
+  background: #334155;
+  color: #fff;
+}
+
+.voice-response-bubble {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 11px;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.assistant-prefix {
+  font-size: 9px;
+  font-weight: 900;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.assistant-text {
+  line-height: 1.3;
+}
+
+.loading-state {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-style: italic;
+  padding: 10px;
+  text-align: center;
+}

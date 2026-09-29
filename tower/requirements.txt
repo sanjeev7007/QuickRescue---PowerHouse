@@ -1,0 +1,14 @@
+# Python dependencies for QuickRescue Communication Tower (Raspberry Pi 4)
+pyserial>=3.5
+pycryptodome>=3.20.0
+requests>=2.31.0
+firebase-admin>=6.4.0
+schedule>=1.2.1
+RPi.GPIO>=0.7.1; platform_system == "Linux"
+spidev>=3.6; platform_system == "Linux"
+smbus2>=0.4.3; platform_system == "Linux"
+pygame>=2.5.2
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+pyttsx3>=2.90

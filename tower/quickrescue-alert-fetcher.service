@@ -1,0 +1,26 @@
+[Unit]
+Description=QuickRescue Communication Tower External Alert Fetcher Service
+After=network.target quickrescue-receiver.service
+Wants=quickrescue-receiver.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/quickrescue
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/opt/quickrescue
+
+ExecStart=/usr/bin/python3 /opt/quickrescue/tower/services/alert_fetcher.py
+
+# Restart policy: auto-start on boot, restart on crash
+Restart=always
+RestartSec=5s
+KillMode=process
+
+# Logging to systemd journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=quickrescue-fetcher
+
+[Install]
+WantedBy=multi-user.target
