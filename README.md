@@ -8,7 +8,7 @@
 
 When natural disasters (floods, earthquakes, cyclones, landslides) destroy mobile towers and power grids, **QuickRescue** keeps rescue teams connected without mobile networks, internet, or expensive satellite phones.
 
-It uses **LoRa radio waves (866 MHz)** to send emergency messages up to several kilometers through a mesh network.
+It uses **LoRa radio waves ** to send emergency messages up to several kilometers through a mesh network.
 
 ---
 
