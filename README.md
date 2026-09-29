@@ -1,7 +1,6 @@
 # QuickRescue
 
-> **Offline Disaster Communication System**  
-> Smart India Hackathon 2026 | Team POWERHOUSE
+> **Offline Disaster Communication System**
 
 ---
 
